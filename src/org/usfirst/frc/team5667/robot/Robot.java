@@ -19,10 +19,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends IterativeRobot {
-	private static final String kDefaultAuto = "Default";
-	private static final String kCustomAuto = "My Auto";
-	private String m_autoSelected;
-	private SendableChooser<String> m_chooser = new SendableChooser<>();
+	//Subsystems
+	XboxController xbox;
+	
+	//Autonomous variables
+	private static final String kDefaultAuto = "Default"; //Default auto command
+	private static final String kCustomAuto = "My Auto"; //Custom auto command
+	private String m_autoSelected; 
+	private SendableChooser<String> m_chooser = new SendableChooser<>(); //Options for auto
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -30,6 +34,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		//Initialize subsystems
+		xbox = new XboxController(0, this);
+		
+		//Add auto commands as options
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
@@ -48,17 +56,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		//Get auto command chosen
 		m_autoSelected = m_chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
 		System.out.println("Auto selected: " + m_autoSelected);
-	}
-
-	/**
-	 * This function is called periodically during autonomous.
-	 */
-	@Override
-	public void autonomousPeriodic() {
+		
+		//Run auto command
 		switch (m_autoSelected) {
 			case kCustomAuto:
 				// Put custom auto code here
@@ -71,10 +73,18 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
+	 * This function is called periodically during autonomous.
+	 */
+	@Override
+	public void autonomousPeriodic() {
+	}
+
+	/**
 	 * This function is called periodically during operator control.
 	 */
 	@Override
 	public void teleopPeriodic() {
+		xbox.enableController();
 	}
 
 	/**
