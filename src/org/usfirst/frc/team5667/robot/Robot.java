@@ -19,8 +19,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends IterativeRobot {
-	//Subsystems
+	//Declare subsystems
 	XboxController xbox;
+	Drivetrain drive;
+	
 	
 	//Autonomous variables
 	private static final String kDefaultAuto = "Default"; //Default auto command
@@ -36,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		//Initialize subsystems
 		xbox = new XboxController(0, this);
+		drive= new Drivetrain();
 		
 		//Add auto commands as options
 		m_chooser.addDefault("Default Auto", kDefaultAuto);

@@ -83,6 +83,14 @@ public class XboxController extends Joystick {
 		}
 		
 		//Check joysticks
+		if (inputLSY!=0){
+			robot.drive.forback(inputLSY);
+		} else if (inputRSX!=0){
+			robot.drive.rotate(inputRSX);
+		} else 
+			robot.drive.stop();
+		
+		
 //		if (inputLSY > gDigit && inputRSX > gDigit) {
 //			driveTrain.forwardRightTurn(inputLSY, inputRSX);
 //		} else if (inputLSY > gDigit && inputRSX < -gDigit) {
