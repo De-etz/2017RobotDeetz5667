@@ -22,6 +22,11 @@ public class Robot extends IterativeRobot {
 	//Declare subsystems
 	XboxController xbox;
 	Drivetrain drive;
+	Camera camera;
+	GyroscopeSPI gyro;
+	UltrasonicSensor ultra;
+	
+	
 	
 	
 	//Autonomous variables
@@ -39,6 +44,10 @@ public class Robot extends IterativeRobot {
 		//Initialize subsystems
 		xbox = new XboxController(0, this);
 		drive= new Drivetrain();
+		
+		camera = new Camera();
+		gyro = new GyroscopeSPI();
+		ultra = new UltrasonicSensor();
 		
 		//Add auto commands as options
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
