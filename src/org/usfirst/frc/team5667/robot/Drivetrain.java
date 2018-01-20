@@ -60,11 +60,12 @@ public class Drivetrain {
 			l2.set((turn+1)*speed);
 			r1.set(speed);
 			r2.set(speed);
-		} else //backward to the left
+		} else {//backward to the left
 			l1.set((-1-turn)*speed);
 			l2.set((-1-turn)*speed);
 			r1.set(speed);
 			r2.set(speed);
+		}
 	}
 }
 

@@ -11,7 +11,7 @@ public class XboxController extends Joystick {
 	private double inputRT, inputLT; //Trigger values
 	private boolean inputRB, inputLB; //Bumper states
 	private boolean inputA, inputB, inputX, inputY, inputMenu, inputStart; //Button states
-	private final double kGHOST = .2; //Threshold for blocking ghost signals
+	private final double kGHOST = .15; //Threshold for blocking ghost signals
 	
 	/**
 	 * Initializes an Xbox controller.
@@ -83,9 +83,14 @@ public class XboxController extends Joystick {
 		}
 		
 		//Check joysticks
-		if (inputLSY!=0){
+		if ((inputLSY > kGHOST || inputLSY < -kGHOST) && (inputRSX > kGHOST || inputRSX < -kGHOST)){
+			System.out.println("BANK");
+			robot.drive.bank(inputLSY, inputRSX);
+		} else if (inputLSY > kGHOST || inputLSY < -kGHOST){
+			System.out.println("FORBACK");
 			robot.drive.forback(inputLSY);
-		} else if (inputRSX!=0){
+		} else if (inputRSX > kGHOST || inputRSX < -kGHOST){
+			System.out.println("ROTATE");
 			robot.drive.rotate(inputRSX);
 		} else 
 			robot.drive.stop();
