@@ -1,33 +1,35 @@
 package org.usfirst.frc.team5667.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GyroscopeSPI {
 	private ADXRS450_Gyro gyro;
 	
-	private int angle;
+	private double angle;
+	private double absAngle;
 	private boolean active;
 	
 	public GyroscopeSPI() {
 		gyro = new ADXRS450_Gyro();
 		gyro.calibrate();
 		angle = 0;
-		setActive(false);
+		active = false;
+	}
+	
+	public void start() {
+		active = true;
 	}
 	
 	public void updateGyro() {
-		angle = (int)gyro.getAngle();
+		angle = gyro.getAngle();
+		angle = (int)(angle *10);
+		angle = angle /10.0;
+		SmartDashboard.putNumber("Gyro value", angle);
 	}
-	public int getAngle() {
+	public double getAngle() {
 		updateGyro();
 		return angle;
-	}
-	
-	public boolean isActive() {
-		return active;
-	}
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 
 	public void reset() {

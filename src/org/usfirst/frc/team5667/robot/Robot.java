@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team5667.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,11 +23,13 @@ public class Robot extends IterativeRobot {
 	//Declare subsystems
 	XboxController xbox;
 	Drivetrain drive;
-	Camera camera;
 	GyroscopeSPI gyro;
-	UltrasonicSensor ultra;
-	
-	
+//	UltrasonicSensor ultra;
+	Autonomous auto;
+	char allianceSwitch;
+	char scale;
+	char opponentSwitch;
+			//Game info
 	
 	
 	//Autonomous variables
@@ -34,6 +37,7 @@ public class Robot extends IterativeRobot {
 	private static final String kCustomAuto = "My Auto"; //Custom auto command
 	private String m_autoSelected; 
 	private SendableChooser<String> m_chooser = new SendableChooser<>(); //Options for auto
+	private SendableChooser<Integer> position = new SendableChooser<>(); 
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -45,14 +49,23 @@ public class Robot extends IterativeRobot {
 		xbox = new XboxController(0, this);
 		drive= new Drivetrain();
 		
-		camera = new Camera();
 		gyro = new GyroscopeSPI();
-		ultra = new UltrasonicSensor();
+//		ultra = new UltrasonicSensor();
+		
+		String gameInfo = DriverStation.getInstance().getGameSpecificMessage();
 		
 		//Add auto commands as options
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
+		
+		position.addDefault("Far left", 0);
+		position.addObject("Left", 1);
+		position.addObject("Center", 2);
+		position.addObject("Right", 3);
+		position.addObject("Far right", 4);
+		SmartDashboard.putData("Robot Position", position);
+		
 	}
 
 	/**
@@ -71,6 +84,8 @@ public class Robot extends IterativeRobot {
 		//Get auto command chosen
 		m_autoSelected = m_chooser.getSelected();
 		System.out.println("Auto selected: " + m_autoSelected);
+		auto = new Autonomous(this, position.getSelected());
+		System.out.println("Running position " + position.getSelected());
 		
 		//Run auto command
 		switch (m_autoSelected) {
@@ -96,7 +111,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		xbox.enableController();
+//		xbox.enableController();
 	}
 
 	/**

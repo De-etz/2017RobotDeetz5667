@@ -53,16 +53,16 @@ public class Drivetrain {
 	    } else if (speed<=0 && turn>=0){ //backward to right
 			l1.set(speed);
 			l2.set(speed);
-			r1.set((turn-1)*speed);
-			r2.set((turn-1)*speed);
+			r1.set((1-turn)*speed);
+			r2.set((1-turn)*speed);
 		} else if (speed>=0 && turn<=0){ //forward to the left
-			l1.set((turn+1)*speed);
-			l2.set((turn+1)*speed);
+			l1.set((1+turn)*speed);
+			l2.set((1+turn)*speed);
 			r1.set(speed);
 			r2.set(speed);
 		} else {//backward to the left
-			l1.set((-1-turn)*speed);
-			l2.set((-1-turn)*speed);
+			l1.set((1+turn)*speed);
+			l2.set((1+turn)*speed);
 			r1.set(speed);
 			r2.set(speed);
 		}
